@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "fstream": "cpp"
-    }
+    },
+    "python.pythonPath": "C:\\Users\\JohnC\\Anaconda3\\python.exe"
 }

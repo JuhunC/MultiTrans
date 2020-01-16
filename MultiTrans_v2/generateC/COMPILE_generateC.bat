@@ -1,0 +1,1 @@
+g++ -std=c++17 -o generateC.o ./generateC.cpp ./generateCovBand.cpp

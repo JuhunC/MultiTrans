@@ -27,8 +27,7 @@ import sys
 import pdb
 
 from optparse import OptionParser,OptionGroup
-usage = """usage: %prog [options] --[tfile | bfile] plinkFileBase outfile
-
+usage = """
 """
 
 parser = OptionParser(usage=usage)
@@ -105,25 +104,29 @@ while i < IN.numSNPs:
       j += 1
    if j < options.computeSize: W = W[:,range(0,j)] 
 
-   if options.verbose: sys.stderr.write("Processing first %d SNPs\n" % i)
+   if options.verbose:
+      sys.stderr.write("Processing first %d SNPs\n" % i)
    if K == None: 
       try: 
-	 K = linalg.fblas.dgemm(alpha=1.,a=W.T,b=W.T,trans_a=True,trans_b=False) # calculateKinship(W) * j
+	      K = linalg.fblas.dgemm(alpha=1.,a=W.T,b=W.T,trans_a=True,trans_b=False) # calculateKinship(W) * j
       except AttributeError: K = np.dot(W,W.T) 
    else:
       try: 
-	 K_j = linalg.fblas.dgemm(alpha=1.,a=W.T,b=W.T,trans_a=True,trans_b=False) # calculateKinship(W) * j
+	      K_j = linalg.fblas.dgemm(alpha=1.,a=W.T,b=W.T,trans_a=True,trans_b=False) # calculateKinship(W) * j
       except AttributeError: K_j = np.dot(W,W.T)
       K = K + K_j
 
 K = K / float(IN.numSNPs)
-if options.verbose: sys.stderr.write("Saving Kinship file to %s\n" % outFile)
+if options.verbose:
+   sys.stderr.write("Saving Kinship file to %s\n" % outFile)
 np.savetxt(outFile,K)
 
 if options.saveEig:
-   if options.verbose: sys.stderr.write("Obtaining Eigendecomposition\n")
+   if options.verbose: 
+      sys.stderr.write("Obtaining Eigendecomposition\n")
    Kva,Kve = linalg.eigh(K)
-   if options.verbose: sys.stderr.write("Saving eigendecomposition to %s.[kva | kve]\n" % outFile)
+   if options.verbose: 
+      sys.stderr.write("Saving eigendecomposition to %s.[kva | kve]\n" % outFile)
    np.savetxt(outFile+".kva",Kva)
    np.savetxt(outFile+".kve",Kve)
       
